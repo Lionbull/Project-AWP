@@ -8,16 +8,18 @@ function Header() {
     <header>
       <AppBar position="static">
         <Toolbar>
-          <Button variant="contained"><Link to="/">{t ('Home')}</Link></Button>
-          <Button variant="contained"><Link to="/about">{t ('About')}</Link></Button>
+          <Button component={Link} to="/" variant="text" color="inherit">{t ('Home')}</Button>
+          <Button component={Link} to="/about" variant="text" color="inherit">{t ('About')}</Button>
           
-          <Button id="fi" variant="contained" onClick={() =>{
+          <Button id="fi" variant="text" color="inherit" sx={{position: "relative", left:"80px"}} onClick={() =>{
             i18n.changeLanguage('fi');
-          }}>fi</Button>
+          }}>FI</Button>
 
-          <Button id="en" variant="contained" onClick={() =>{
+          <Button id="en" variant="text" color="inherit" sx={{position: "relative", left:"80px"}} onClick={() =>{
             i18n.changeLanguage('en');
-          }}>en</Button>
+          }}>EN</Button>
+
+          <Button component={Link} to="/login" variant="text" color="inherit" sx={{position: "relative", left:"160px"}}>{t ('Login')}</Button>
 
         </Toolbar>
       </AppBar>
