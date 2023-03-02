@@ -8,6 +8,7 @@ var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var postsRouter = require('./routes/posts');
 
 const mongoose = require('mongoose');
 const mongoDB = 'mongodb://localhost:27017/testdb' //process.env.MONGO_URL;
@@ -40,5 +41,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
 
 module.exports = app;

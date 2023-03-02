@@ -6,6 +6,7 @@ import Header from './components/Header';
 import { Suspense } from 'react';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
+import PostsPage from './components/PostsPage';
 
 function App() {
   
@@ -16,6 +17,7 @@ function App() {
         <div className="App">
           <Header />
           <Routes>
+            <Route path="/posts" element={<PostsPage />} />
             <Route path="/" element={<AddBook />} />
             <Route path="/book/:name" element={<ShowBook />} />
             <Route path="/error" element={<ShowBook />} />
