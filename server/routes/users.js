@@ -16,18 +16,14 @@ router.get('/list', validateToken, (req, res, next) => {
   
 });
 
-router.get('/login', (req, res, next) => {
-  res.render('login');
-});
-
 router.post('/login', 
-  body("username").trim().escape(),
-  body("password").escape(),
+  body("email"),
+  body("password"),
   (req, res, next) => {
     User.findOne({email: req.body.email}, (err, user) =>{
     if(err) throw err;
     if(!user) {
-      return res.status(403).json({message: "Login failed :("});
+      return res.status(403).json({message: "Login failed. Email not found."});
     } else {
       bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
         if(err) throw err;
@@ -61,7 +57,7 @@ router.get('/register', (req, res, next) => {
 });
 
 router.post('/register', 
-  body("email").isLength({min: 3}).trim().escape(),
+  body("email").isLength({min: 3}),
   body("password").isLength({min: 5}),
   (req, res, next) => {
     const errors = validationResult(req);
@@ -74,7 +70,7 @@ router.post('/register',
         throw err
       };
       if(user){
-        return res.status(403).json({email: "Email already in use."});
+        return res.status(403).json({message: "Email already in use."});
       } else {
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(req.body.password, salt, (err, hash) => {
@@ -86,7 +82,7 @@ router.post('/register',
               },
               (err, ok) => {
                 if(err) throw err;
-                return res.redirect("/login.html");
+                return res.redirect("/login");
               }
             );
           });
