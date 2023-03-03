@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { Button, TextField, Stack, Typography } from '@mui/material'
+import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Button, TextField, Stack, Typography, Alert } from '@mui/material'
 import { useState } from 'react'
 import { Container } from '@mui/system'
 
@@ -8,6 +8,9 @@ function LoginPage() {
 
     const [email, setEmail] = useState('dummy@email')
     const [password, setPassword] = useState('')
+    const [alert, setAlert] = useState(false)
+
+    const navigate = useNavigate();
 
     function handleSubmit() {
         fetch('/users/login', {
@@ -16,12 +19,21 @@ function LoginPage() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({email: email, password: password})
-    }).then(res => {return res.json()}).then(data => {console.log(data.token);localStorage.setItem('token', data.token)})
+    }).then(res => {return res.json()})
+    .then(data => {console.log(data.token);
+        localStorage.setItem('token', data.token)
+        if (data.token) {navigate('/')}
+    else {setAlert(true)}})
     }
 
     return (
         <Container maxWidth="sm" sx={{mt:2}}>
             <Typography variant="h3">Login Page</Typography>
+            {alert? 
+            <Alert severity="error">
+                Login failed!
+            </Alert>: <></>
+            }
             <Stack spacing={2}>
 
                 <TextField id="user_email" label="Email" sx={{mt:"20px"}} onChange={(e) => setEmail(e.target.value)}/>

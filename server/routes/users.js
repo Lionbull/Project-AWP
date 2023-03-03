@@ -82,7 +82,7 @@ router.post('/register',
               },
               (err, ok) => {
                 if(err) throw err;
-                return res.redirect("/login");
+                return res.status(200).json({message: "Registration successful!"});
               }
             );
           });

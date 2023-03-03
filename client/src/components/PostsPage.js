@@ -11,7 +11,7 @@ function PostsPage() {
         {/* MUI Field for creating new posts*/}
         <Stack spacing={2}>
             <TextField id="post_title" label="Title" sx={{mt:"20px"}} />
-            <TextField id="post_content" label="Content" multiline sx={{mt:"20px"}} />
+            <TextField id="post_content" label="Content" multiline minRows={4} sx={{mt:"20px"}} />
             <Button variant="contained" sx={{mt:"20px"}} onClick={handleClick}>Create Post</Button>
         </Stack>
     </Container>
