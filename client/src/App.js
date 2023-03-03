@@ -9,9 +9,10 @@ import SiglePost from './components/SiglePost';
 import { useTranslation } from 'react-i18next';
 
 function App() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
+    // Suspense is used to show loading text while the page is loading
     <Suspense fallback={<div>{t ('Loading...')}</div>}>
       <Router>
         <div className="App">

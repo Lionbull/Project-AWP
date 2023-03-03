@@ -1,12 +1,17 @@
 import React from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button, TextField, Stack, Typography, Alert } from '@mui/material'
 import { useState } from 'react'
 import { Container } from '@mui/system'
 import { useTranslation } from 'react-i18next';
 
+/**
+ * This function is used to create the login page
+ * 
+ * @returns Login page
+ */
 function LoginPage() {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const [email, setEmail] = useState('dummy@email')
     const [password, setPassword] = useState('')
@@ -14,6 +19,7 @@ function LoginPage() {
 
     const navigate = useNavigate();
 
+    // When "Login" button is clicked, this function is called and it sends the login credentials to the backend
     function handleSubmit() {
         fetch('/users/login', {
             method: 'POST',
@@ -24,6 +30,8 @@ function LoginPage() {
     }).then(res => {return res.json()})
     .then(data => {console.log(data.token);
         localStorage.setItem('token', data.token)
+
+        // Navigating to the posts page after login
         if (data.token) {navigate('/')}
     else {setAlert(true)}})
     }
@@ -31,6 +39,8 @@ function LoginPage() {
     return (
         <Container maxWidth="sm" sx={{mt:2}}>
             <Typography variant="h3">{t ('Login Page')}</Typography>
+
+            {/* If logging credentials are wrong. Alert pops up*/ }
             {alert? 
             <Alert severity="error">
                 {t ('Login failed!')}
@@ -43,6 +53,8 @@ function LoginPage() {
                 <Button variant="contained" sx={{mt:"20px"}} onClick={handleSubmit}>{t ('Login')}</Button>
 
             </Stack>
+            
+            {/* Navigating to the "Register page" if button is clicked */}
             <Button component={Link} to="/register" variant="contained" sx={{mt:"20px"}}>{t ("Don't have an account?")}</Button>
 
         </Container>
