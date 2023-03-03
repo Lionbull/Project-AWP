@@ -7,15 +7,7 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const validateToken = require("../auth/validateToken.js")
 
-/* GET users listing. */
-router.get('/list', validateToken, (req, res, next) => {
-  User.find({}, (err, users) =>{
-    if(err) return next(err);
-    res.render("users", {users});
-  })
-  
-});
-
+// Login route to get a token
 router.post('/login', 
   body("email"),
   body("password"),
@@ -23,6 +15,8 @@ router.post('/login',
     User.findOne({email: req.body.email}, (err, user) =>{
     if(err) throw err;
     if(!user) {
+
+      // If the user is not found, return a 403 error
       return res.status(403).json({message: "Login failed. Email not found."});
     } else {
       bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
@@ -34,6 +28,7 @@ router.post('/login',
           }
           jwt.sign(
             jwtPayload,
+            // Using the secret from the environment variable (.env file)
             process.env.SECRET,
             {
               expiresIn: 120
@@ -45,17 +40,14 @@ router.post('/login',
         }
       })
     }
-
     })
-
 });
-
-
 
 router.get('/register', (req, res, next) => {
   res.render('register');
 });
 
+// Register route to create a new user
 router.post('/register', 
   body("email").isLength({min: 3}),
   body("password").isLength({min: 5}),
@@ -70,9 +62,13 @@ router.post('/register',
         throw err
       };
       if(user){
+
+        // If a user with same email is found, return a 403 error
         return res.status(403).json({message: "Email already in use."});
       } else {
         bcrypt.genSalt(10, (err, salt) => {
+
+          // Hash the password before saving it to the database
           bcrypt.hash(req.body.password, salt, (err, hash) => {
             if(err) throw err;
             User.create(

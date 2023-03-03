@@ -1,3 +1,5 @@
+// Description: This file contains the schema for the comment model
+
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;

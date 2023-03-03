@@ -5,17 +5,16 @@ const validateToken = require('../auth/validateToken');
 const Post = require('../models/Posts');
 const Comment = require('../models/Comments');
 
-/* GET home page. */
+// Route to get all posts from the database
 router.get('/listposts', function(req, res, next) {
-  // Get list of posts from database
   Post.find({}, (err, posts) =>{
     if(err) return next(err);
     res.json(posts);
   })
 });
 
+// Route to create a post in the database
 router.post('/createpost', validateToken, function(req, res, next) {
-  // Create a new post in the database
   new Post({
     email: req.user.email,
     title: req.body.title,
@@ -27,6 +26,7 @@ router.post('/createpost', validateToken, function(req, res, next) {
   })
 })
 
+// Route to get a single post by id
 router.post('/getonepost', function(req, res, next) {
   let post_id = req.body.post_id;
   console.log(post_id)
@@ -36,6 +36,7 @@ router.post('/getonepost', function(req, res, next) {
   })
 })
 
+// Route to get all comments for a single post
 router.post('/listcomments', function(req, res, next) {
   Comment.find({commented_post_id: req.body.post_id}, (err, comments) =>{
     if(err) return next(err);
@@ -43,8 +44,8 @@ router.post('/listcomments', function(req, res, next) {
   })
 })
 
+// Route to create a comment on a post in the database
 router.post('/createcomment', validateToken, function(req, res, next) {
-  // Create a new comment in the database
   new Comment({
     commented_post_id: req.body.post_id,
     email: req.user.email,
