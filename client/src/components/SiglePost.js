@@ -2,9 +2,11 @@ import React, {useState, useEffect} from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Card, CardContent, Typography, Button, Stack, TextField, Alert } from '@mui/material'
 import { Container } from '@mui/system'
+import { useTranslation } from 'react-i18next';
 
 
 function SiglePost() {
+    const { t, i18n } = useTranslation();
     const [post, setPost] = useState([])
     const [commentList, setCommentList] = useState([])
     const [update, setUpdate] = useState(false)
@@ -49,32 +51,37 @@ function SiglePost() {
     }, [update])
     
   return (
-    <Container>
+    <Container sx={{mt:2}} maxWidth="md">
         {post.map((post) => <Post key={post._id} post_item={post} />)}
 
-        <Stack spacing={2}>
-            <TextField id="post_content" label="Your Comment..." multiline minRows={4} sx={{mt:"20px"}} />
-            <Button variant="contained" sx={{mt:"20px"}} onClick={postComment}>Comment</Button>
-            {alert? 
-            <Alert severity="error">
-                You are not logged in!
-                You can <Link to="/login">login</Link> here!
-            </Alert>: <></>
-            }
-        </Stack>
-        <Stack spacing={2}>
+        <Container maxWidth="sm" sx={{mb:2}}>
+            <Stack spacing={2}>
+                <TextField id="post_content" label={t ('Your Comment...')} multiline minRows={4} sx={{mt:"20px"}}/>
+                <Button variant="contained" sx={{mt:"20px"}} onClick={postComment}>{t ('Comment')}</Button>
+                {alert? 
+                <Alert severity="error">
+                    {t ('You are not logged in!')}
+                    {t ('You can')} <Link to="/login">{t ('login')}</Link> {t ('here!')}
+                </Alert>: <></>
+                }
+            </Stack>
+        </Container>
+
+        <Stack spacing={2} sx={{mt:"20px"}}>
             {commentList.map((comment) => <Comment key={comment._id} comment_item={comment} />)}
         </Stack>
+        
 
     </Container>
   )
 }
 
 function Comment({comment_item}) {
+    const { t, i18n } = useTranslation();
     return(
         <Card variant='outlined'>
           <CardContent>
-            <Typography variant="h6" color="text.secondary">User {comment_item.email} commented</Typography>
+            <Typography variant="h6" color="text.secondary">{t ('User')} {comment_item.email} {t ('commented')}</Typography>
             <Typography variant="body1">{comment_item.body}</Typography>
           </CardContent>    
         </Card>
@@ -82,10 +89,11 @@ function Comment({comment_item}) {
 }
 
 function Post({post_item}) {
+    const { t, i18n } = useTranslation();
     return(
       <Card variant='outlined'>
         <CardContent>
-          <Typography variant="h6" color="text.secondary">User {post_item.email} posted</Typography>
+          <Typography variant="h6" color="text.secondary">{t ('User')} {post_item.email} {t ('posted')}</Typography>
           <Typography variant="h5">{post_item.title}</Typography>
           <Typography variant="body1">{post_item.body}</Typography>
         </CardContent>    

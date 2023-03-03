@@ -6,12 +6,13 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import PostsPage from './components/PostsPage';
 import SiglePost from './components/SiglePost';
+import { useTranslation } from 'react-i18next';
 
 function App() {
-  
+  const { t, i18n } = useTranslation();
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>{t ('Loading...')}</div>}>
       <Router>
         <div className="App">
           <Header />

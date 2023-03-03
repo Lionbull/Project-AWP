@@ -1,5 +1,28 @@
 {
     "This is the front page": "Tämä on etusivu",
     "About": "Tietoa meistä",
-    "Home": "Etusivu"
+    "Home": "Etusivu",
+    "commented": "kommentoi",
+    "posted": "julkaisi",
+    "Comment": "Kommentti",
+    "User": "Käyttäjä",
+    "Loading...": "Ladataan...",
+    "Posts": "Julkaisut",
+    "Comments": "Kommentit",
+    "Login": "Kirjaudu sisään",
+    "Your Comment...": "Kommenttisi...",
+    "Create Post": "Luo julkaisu",
+    "Title": "Otsikko",
+    "Content": "Sisältö",
+    "Recent Posts": "Viimeisimmät julkaisut",
+    "View Comments": "Katso kommentit",
+    "User ": "Käyttäjä",
+    "Login Page": "Kirjautumissivu",
+    "Email": "Sähköposti",
+    "Password": "Salasana",
+    "Don't have an account?": "Ei vielä tiliä?",
+    "Back to login": "Takaisin kirjautumiseen",
+    "Register": "Rekisteröidy",
+    "Register page": "Rekisteröitymissivu"
+    
 }

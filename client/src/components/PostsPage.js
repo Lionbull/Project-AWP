@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Container, Typography, TextField, Button, Stack, Card, CardActions, CardContent, Alert } from '@mui/material'
+import { useTranslation } from 'react-i18next';
 
 function PostsPage() {
+  const { t, i18n } = useTranslation();
   const [update, setUpdate] = useState(false)
   const [alert, setAlert] = useState(false)
   
@@ -32,21 +34,21 @@ function PostsPage() {
   return (
     <Container maxWidth="lg" sx={{mt:2}}>
       <Container maxWidth="md">
-        <Typography variant="h4">Create Post</Typography>
+        <Typography variant="h4">{t ('Create Post')}</Typography>
         {/* MUI Field for creating new posts*/}
         <Stack spacing={2}>
-            <TextField id="post_title" label="Title" sx={{mt:"20px"}} />
-            <TextField id="post_content" label="Content" multiline minRows={4} sx={{mt:"20px"}} />
-            <Button variant="contained" sx={{mt:"20px"}} onClick={handleClick}>Create Post</Button>
+            <TextField id="post_title" label={t ('Title')} sx={{mt:"20px"}} />
+            <TextField id="post_content" label={t ('Content')} multiline minRows={4} sx={{mt:"20px"}} />
+            <Button variant="contained" sx={{mt:"20px"}} onClick={handleClick}>{t ('Create Post')}</Button>
         </Stack>
         {alert? 
         <Alert severity="error">
-            You are not logged in!
-            You can <Link to="/login">login</Link> here!
+            {t ('You are not logged in!')}
+            {t ('You can')} <Link to="/login">{t ('login')}</Link> {t ('here!')}
         </Alert>: <></>
         }
         </Container>
-        <Typography variant="h5" sx={{mt:2}}>Recent Posts</Typography>
+        <Typography variant="h5" sx={{mt:2}}>{t ('Recent Posts')}</Typography>
         {/* MUI Field for creating new posts*/}
         <Stack spacing={2}>
           {postList.map((post) => <Post key={post._id} post_item={post} />)}
@@ -56,6 +58,7 @@ function PostsPage() {
 }
 
 function Post({post_item}) {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
   function clickComments(){
@@ -64,12 +67,12 @@ function Post({post_item}) {
   return(
     <Card variant='outlined'>
       <CardContent>
-        <Typography variant="h6" color="text.secondary">User {post_item.email} posted</Typography>
+        <Typography variant="h6" color="text.secondary">{t ('User ')}{post_item.email} {t ('posted')}</Typography>
         <Typography variant="h5">{post_item.title}</Typography>
         <Typography variant="body1">{post_item.body}</Typography>
       </CardContent>    
       <CardActions>
-        <Button size="small" onClick={clickComments}>View Comments</Button>
+        <Button size="small" onClick={clickComments}>{t ('View Comments')}</Button>
       </CardActions>
     </Card>
   )
