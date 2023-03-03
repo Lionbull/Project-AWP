@@ -7,6 +7,7 @@ import { Suspense } from 'react';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import PostsPage from './components/PostsPage';
+import SiglePost from './components/SiglePost';
 
 function App() {
   
@@ -18,6 +19,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<PostsPage />} />
+            <Route path="/post/:id" element={<SiglePost />} />
             <Route path="/books" element={<AddBook />} />
             <Route path="/book/:name" element={<ShowBook />} />
             <Route path="/error" element={<ShowBook />} />

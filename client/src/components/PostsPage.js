@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Container, Typography, TextField, Button, Stack, Card, CardActions, CardContent, Alert } from '@mui/material'
-
 
 function PostsPage() {
   const [update, setUpdate] = useState(false)
@@ -57,6 +56,11 @@ function PostsPage() {
 }
 
 function Post({post_item}) {
+  const navigate = useNavigate();
+
+  function clickComments(){
+    navigate('/post/' + post_item._id)
+  }
   return(
     <Card variant='outlined'>
       <CardContent>
@@ -65,7 +69,7 @@ function Post({post_item}) {
         <Typography variant="body1">{post_item.body}</Typography>
       </CardContent>    
       <CardActions>
-        <Button size="small">View Comments</Button>
+        <Button size="small" onClick={clickComments}>View Comments</Button>
       </CardActions>
     </Card>
   )
