@@ -1,7 +1,5 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AddBook from './components/AddBook';
-import ShowBook from './components/ShowBook';
 import Header from './components/Header';
 import { Suspense } from 'react';
 import LoginPage from './components/LoginPage';
@@ -20,9 +18,6 @@ function App() {
           <Routes>
             <Route path="/" element={<PostsPage />} />
             <Route path="/post/:id" element={<SiglePost />} />
-            <Route path="/books" element={<AddBook />} />
-            <Route path="/book/:name" element={<ShowBook />} />
-            <Route path="/error" element={<ShowBook />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
           </Routes>

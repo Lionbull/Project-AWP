@@ -1,9 +1,0 @@
-# Task 2
-POST http://localhost:3000/api/book/
-Cotent-Type: application/json
-
-{
-    "title": "The Lord of the Rings",
-    "author": "J.R.R. Tolkien",
-    "year": 1954
-}
