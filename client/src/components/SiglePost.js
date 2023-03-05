@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Card, CardContent, Typography, Button, Stack, TextField, Alert } from '@mui/material'
+import { Card, CardContent, Typography, Button, Stack, TextField, Alert, CardActions } from '@mui/material'
 import { Container } from '@mui/system'
 import { useTranslation } from 'react-i18next';
+
 
 /**
  * This function is used to create a single post and it is used in App.js
@@ -111,7 +112,10 @@ function Comment({comment_item}) {
           <CardContent>
             <Typography variant="h6" color="text.secondary">{t ('User')} {comment_item.email} {t ('commented')}</Typography>
             <Typography variant="body1">{comment_item.body}</Typography>
-          </CardContent>    
+          </CardContent>
+          <CardActions>
+            <Votes post_id={comment_item._id}/>
+          </CardActions>
         </Card>
       )
 }
@@ -124,15 +128,66 @@ function Comment({comment_item}) {
  */
 function Post({post_item}) {
     const { t } = useTranslation();
+    const params = useParams()
     return(
       <Card variant='outlined'>
         <CardContent>
           <Typography variant="h6" color="text.secondary">{t ('User')} {post_item.email} {t ('posted')}</Typography>
           <Typography variant="h5">{post_item.title}</Typography>
           <Typography variant="body1">{post_item.body}</Typography>
-        </CardContent>    
+        </CardContent>
+        <CardActions>
+          <Votes post_id={params.id}/>
+        </CardActions>
       </Card>
     )
   }
+
+function Votes({post_id}) {
+  const { t } = useTranslation();
+  const [votes, setVotes] = useState(0)
+  const [votePressed, setVotePressed] = useState(false)
+  const [alert, setAlert] = useState(false)
+
+  useEffect(() => {
+    fetch('/posts/getvotes', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({post_id: post_id})
+    }).then(res => res.json()).then(data => {setVotes(data)})
+  }, [votePressed])
+
+
+  // When the user clicks the "Up Vote" or "Down Vote" button, the vote is sent to the backend
+  // Buttons pass the value of the vote to the function (1 for up vote, -1 for down vote)
+  function handleVote(votevalue) {
+    fetch ('/posts/submitvote', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer ' + localStorage.getItem('token')
+      },
+      body: JSON.stringify({post_id: post_id, vote: votevalue})
+    }).then(data => {if(data.status === 403) {setAlert(true)}})
+
+    setVotePressed(!votePressed)
+  }
+
+  return(
+    <>
+    <Button size="small" onClick={() => handleVote(-1)}>{t ('Down Vote')}</Button>
+    <Typography variant="body1" sx={{marginLeft:1}}>{votes}</Typography>
+    <Button size="small" onClick={() => handleVote(1)}>{t ('Up Vote')}</Button>
+    {alert? 
+    <Alert severity="error">
+        {t ('You are not logged in!')}
+        {t ('You can')} <Link to="/login">{t ('login')}</Link> {t ('here!')}
+    </Alert>: <></>
+    }
+    </>
+  )
+}
 
 export default SiglePost

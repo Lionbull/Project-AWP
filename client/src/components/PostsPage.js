@@ -91,12 +91,63 @@ function Post({post_item}) {
       <CardContent>
         <Typography variant="h6" color="text.secondary">{t ('User ')}{post_item.email} {t ('posted')}</Typography>
         <Typography variant="h5">{post_item.title}</Typography>
-        <Typography variant="body1">{post_item.body}</Typography>
+        <pre style={{fontSize:"12"}}>{post_item.body}</pre>
       </CardContent>    
       <CardActions>
         <Button size="small" onClick={clickComments}>{t ('View Comments')}</Button>
+        {/* Button for voting the post */}
+        <Votes post_item={post_item}/>
+        
       </CardActions>
     </Card>
+  )
+}
+
+function Votes(post_item) {
+  const { t } = useTranslation();
+  const [votes, setVotes] = useState(0)
+  const [votePressed, setVotePressed] = useState(false)
+  const [alert, setAlert] = useState(false)
+
+
+  useEffect(() => {
+    fetch('/posts/getvotes', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({post_id: post_item.post_item._id})
+    }).then(res => res.json()).then(data => {setVotes(data)})
+  }, [votePressed])
+
+
+  // When the user clicks the "Up Vote" or "Down Vote" button, the vote is sent to the backend
+  // Buttons pass the value of the vote to the function (1 for up vote, -1 for down vote)
+  function handleVote(votevalue) {
+    fetch ('/posts/submitvote', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer ' + localStorage.getItem('token')
+      },
+      body: JSON.stringify({post_id: post_item.post_item._id, vote: votevalue})
+    }).then(data => {if(data.status === 403) {setAlert(true)}})
+
+    setVotePressed(!votePressed)
+  }
+
+  return(
+    <>
+    <Button size="small" onClick={() => handleVote(-1)}>{t ('Down Vote')}</Button>
+    <Typography variant="body1" sx={{marginLeft:1}}>{votes}</Typography>
+    <Button size="small" onClick={() => handleVote(1)}>{t ('Up Vote')}</Button>
+    {alert? 
+    <Alert severity="error">
+        {t ('You are not logged in!')}
+        {t ('You can')} <Link to="/login">{t ('login')}</Link> {t ('here!')}
+    </Alert>: <></>
+    }
+    </>
   )
 }
 
