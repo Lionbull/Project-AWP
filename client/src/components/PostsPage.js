@@ -106,6 +106,11 @@ function Post({post_item}) {
   )
 }
 
+/**
+ * This function is used to show the votes and to send the vote to the backend
+ * 
+ * @returns Votes component
+ */
 function Votes(post_item) {
   const { t } = useTranslation();
   const [votes, setVotes] = useState(0)
