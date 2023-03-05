@@ -1,5 +1,6 @@
 # Project-AWP
 This is a forum website as a course project for Advanced Web Applications course.
+Student name: Georgy Pokazeev
 
 # Required packages
 To install required packages run following command in root folder:
