@@ -48,8 +48,8 @@ function LoginPage() {
             }
             <Stack spacing={2}>
 
-                <TextField id="user_email" label="Email" sx={{mt:"20px"}} onChange={(e) => setEmail(e.target.value)}/>
-                <TextField id="user_password" label="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
+                <TextField id="user_email" label={t ('Email')} sx={{mt:"20px"}} onChange={(e) => setEmail(e.target.value)}/>
+                <TextField id="user_password" label={t ('Password')} type="password" onChange={(e) => setPassword(e.target.value)} />
                 <Button variant="contained" sx={{mt:"20px"}} onClick={handleSubmit}>{t ('Login')}</Button>
 
             </Stack>

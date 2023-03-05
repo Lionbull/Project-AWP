@@ -59,7 +59,7 @@ function PostsPage() {
         {/* If user is not logged in, the alert pops up*/}
         {alert? 
         <Alert severity="error">
-            {t ('You are not logged in!')}
+            {t ('You are not logged in! ')}
             {t ('You can')} <Link to="/login">{t ('login')}</Link> {t ('here!')}
         </Alert>: <></>
         }
@@ -90,8 +90,8 @@ function Post({post_item}) {
     <Card variant='outlined'>
       <CardContent>
         <Typography variant="h6" color="text.secondary">{t ('User ')}{post_item.email} {t ('posted')}</Typography>
-        <Typography variant="h5">{post_item.title}</Typography>
-        <pre style={{fontSize:"12"}}>{post_item.body}</pre>
+        <Typography variant="h5" sx={{mb:4}}>{post_item.title}</Typography>
+        <Typography variant="body1" align="left" style={{ wordWrap: "break-word"}} component="pre">{post_item.body}</Typography>
       </CardContent>    
       <CardActions>
         <Button size="small" onClick={clickComments}>{t ('View Comments')}</Button>
@@ -121,8 +121,8 @@ function Votes(post_item) {
   }, [votePressed])
 
 
-  // When the user clicks the "Up Vote" or "Down Vote" button, the vote is sent to the backend
-  // Buttons pass the value of the vote to the function (1 for up vote, -1 for down vote)
+  // When the user clicks the "Upvote" or "Downvote" button, the vote is sent to the backend
+  // Buttons pass the value of the vote to the function (1 for up vote, -1 for downvote)
   function handleVote(votevalue) {
     fetch ('/posts/submitvote', {
       method: 'POST',
@@ -138,12 +138,12 @@ function Votes(post_item) {
 
   return(
     <>
-    <Button size="small" onClick={() => handleVote(-1)}>{t ('Down Vote')}</Button>
+    <Button size="small" onClick={() => handleVote(-1)}>{t ('Downvote')}</Button>
     <Typography variant="body1" sx={{marginLeft:1}}>{votes}</Typography>
-    <Button size="small" onClick={() => handleVote(1)}>{t ('Up Vote')}</Button>
+    <Button size="small" onClick={() => handleVote(1)}>{t ('Upvote')}</Button>
     {alert? 
     <Alert severity="error">
-        {t ('You are not logged in!')}
+        {t ('You are not logged in! ')}
         {t ('You can')} <Link to="/login">{t ('login')}</Link> {t ('here!')}
     </Alert>: <></>
     }

@@ -23,6 +23,13 @@
     "Don't have an account?": "Ei vielä tiliä?",
     "Back to login": "Takaisin kirjautumiseen",
     "Register": "Rekisteröidy",
-    "Register page": "Rekisteröitymissivu"
+    "Register page": "Rekisteröitymissivu",
+    "Upvote": "Ylä-äänestys",
+    "Downvote": "Ala-äänestys",
+    "You are not logged in! ": "Et ole kirjautunut sisään! ",
+    "You can": "Voit",
+    "login": "kirjautua sisään",
+    "here!" : "täällä!",
+    "Login failed!": "Kirjautuminen epäonnistui!"
     
 }
