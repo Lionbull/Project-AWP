@@ -24,7 +24,6 @@ function RegisterPage() {
             },
             body: JSON.stringify({email: email, password: password})
         }).then(res => {return res.json()}).then(data => {
-            console.log(data)
 
             // Changing the state of alert to true if registration is successful
             // This will make the success alert pop up

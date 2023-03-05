@@ -28,7 +28,7 @@ function LoginPage() {
             },
             body: JSON.stringify({email: email, password: password})
     }).then(res => {return res.json()})
-    .then(data => {console.log(data.token);
+    .then(data => {
         localStorage.setItem('token', data.token)
 
         // Navigating to the posts page after login
