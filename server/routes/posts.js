@@ -22,7 +22,6 @@ router.post('/createpost', validateToken, function(req, res, next) {
     body: req.body.body
   }).save((err) => {
     if (err) return next(err)
-    console.log(req.body)
     return res.status(200);
   })
 })
@@ -30,7 +29,6 @@ router.post('/createpost', validateToken, function(req, res, next) {
 // Route to get a single post by id
 router.post('/getonepost', function(req, res, next) {
   let post_id = req.body.post_id;
-  console.log(post_id)
   Post.find({_id: post_id}, (err, post) =>{
     if(err) return next(err);
     res.json(post);
@@ -53,7 +51,6 @@ router.post('/createcomment', validateToken, function(req, res, next) {
     body: req.body.body
   }).save((err) => {
     if (err) return next(err)
-    console.log(req.body)
     return res.status(200);
   })
 })
@@ -71,7 +68,6 @@ router.post('/getvotes', function(req, res, next) {
       // Calculate the total value of all votes for a single post
       votes_total += votes[i].vote;
     }
-    console.log(votes_total)
     res.json(votes_total);
   })
 })
@@ -89,7 +85,6 @@ router.post('/submitvote', validateToken, function(req, res, next) {
       if(vote.vote === req.body.vote) {
         Votes.deleteOne({user_email: req.user.email, post_id: req.body.post_id}, (err) => {
           if (err) return next(err)
-          console.log(req.body)
           return res.status(200);
         })}
 
@@ -104,7 +99,6 @@ router.post('/submitvote', validateToken, function(req, res, next) {
             user_email: req.user.email
           }).save((err) => {
             if (err) return next(err)
-            console.log(req.body)
             return res.status(200);
           })
 
@@ -119,7 +113,6 @@ router.post('/submitvote', validateToken, function(req, res, next) {
           user_email: req.user.email
         }).save((err) => {
           if (err) return next(err)
-          console.log(req.body)
           return res.status(200);
         })
       }
