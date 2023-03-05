@@ -111,7 +111,7 @@ function Comment({comment_item}) {
         <Card variant='outlined'>
           <CardContent>
             <Typography variant="h6" color="text.secondary" sx={{mb:4}}>{t ('User')} {comment_item.email} {t ('commented')}</Typography>
-            <Typography variant="body1" align="left" style={{ wordWrap: "break-word"}} component="pre">{comment_item.body}</Typography>
+            <Typography variant="body1" align="left" style={{whiteSpace: "pre-wrap"}} component="pre">{comment_item.body}</Typography>
           </CardContent>
           <CardActions>
             <Votes post_id={comment_item._id}/>
@@ -134,7 +134,7 @@ function Post({post_item}) {
         <CardContent>
           <Typography variant="h6" color="text.secondary">{t ('User')} {post_item.email} {t ('posted')}</Typography>
           <Typography variant="h5" sx={{mb:4}}>{post_item.title}</Typography>
-          <Typography variant="body1" align="left" style={{ wordWrap: "break-word"}} component="pre">{post_item.body}</Typography>
+          <Typography variant="body1" align="left" style={{whiteSpace: "pre-wrap"}} component="pre">{post_item.body}</Typography>
         </CardContent>
         <CardActions>
           <Votes post_id={params.id}/>

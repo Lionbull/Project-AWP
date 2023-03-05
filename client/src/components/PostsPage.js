@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Container, Typography, TextField, Button, Stack, Card, CardActions, CardContent, Alert } from '@mui/material'
+import { Grid, Container, Typography, TextField, Button, Stack, Card, CardActions, CardContent, Alert } from '@mui/material'
 import { useTranslation } from 'react-i18next';
+
 
 /**
  * This function creates a page with all posts and a form for creating new posts
@@ -91,7 +92,9 @@ function Post({post_item}) {
       <CardContent>
         <Typography variant="h6" color="text.secondary">{t ('User ')}{post_item.email} {t ('posted')}</Typography>
         <Typography variant="h5" sx={{mb:4}}>{post_item.title}</Typography>
-        <Typography variant="body1" align="left" style={{ wordWrap: "break-word"}} component="pre">{post_item.body}</Typography>
+        <Grid container>
+        <Typography variant="body1" align="left" component="pre" style={{whiteSpace: "pre-wrap"}}>{post_item.body}</Typography>
+        </Grid>
       </CardContent>    
       <CardActions>
         <Button size="small" onClick={clickComments}>{t ('View Comments')}</Button>
